@@ -1,0 +1,16 @@
+[project]
+name = "time-announcer"
+version = "0.1.0"
+description = "A macOS desktop app that announces the time at configurable intervals."
+requires-python = ">=3.10"
+dependencies = [
+    "pyside6",
+    "pyttsx3",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
