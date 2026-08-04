@@ -7,20 +7,53 @@ from time_announcer.ui import MainWindow
 
 
 def make_tray_icon() -> QIcon:
-    """Draws a small amber dot icon at runtime, so we don't need an
-    external image asset file."""
-    size = 22
+    """Draws a clock-face icon at runtime for the menu bar."""
+    from PySide6.QtCore import QPointF
+    from PySide6.QtGui import QPen
+    import math
+
+    size = 32
     pixmap = QPixmap(size, size)
     pixmap.fill(Qt.transparent)
 
     painter = QPainter(pixmap)
     painter.setRenderHint(QPainter.Antialiasing)
+
+    center = size / 2
+    radius = size / 2 - 3
+
+    # Clock face outline
+    pen = QPen(QColor("#E8A33D"))
+    pen.setWidth(3)
+    pen.setCapStyle(Qt.RoundCap)
+    painter.setPen(pen)
+    painter.setBrush(Qt.NoBrush)
+    painter.drawEllipse(QPointF(center, center), radius, radius)
+
+    # Hour hand (pointing to ~2 o'clock)
+    hour_angle = math.radians(60 - 90)
+    hour_len = radius * 0.5
+    painter.drawLine(
+        QPointF(center, center),
+        QPointF(center + hour_len * math.cos(hour_angle),
+                center + hour_len * math.sin(hour_angle)),
+    )
+
+    # Minute hand (pointing to 12)
+    minute_angle = math.radians(-90)
+    minute_len = radius * 0.8
+    painter.drawLine(
+        QPointF(center, center),
+        QPointF(center + minute_len * math.cos(minute_angle),
+                center + minute_len * math.sin(minute_angle)),
+    )
+
+    # Center dot
     painter.setBrush(QColor("#E8A33D"))
     painter.setPen(Qt.NoPen)
-    margin = 3
-    painter.drawEllipse(margin, margin, size - margin * 2, size - margin * 2)
-    painter.end()
+    painter.drawEllipse(QPointF(center, center), 2.5, 2.5)
 
+    painter.end()
     return QIcon(pixmap)
 
 
