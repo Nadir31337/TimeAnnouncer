@@ -13,7 +13,7 @@ STYLESHEET = """
 QWidget {
     background-color: #14121A;
     color: #F2EFE9;
-    font-family: -apple-system, "SF Pro Text";
+    font-family: ".AppleSystemUIFont", "SF Pro Text";
 }
 
 #clockLabel {
