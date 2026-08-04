@@ -7,7 +7,7 @@ from PySide6.QtGui import QPainter, QPen, QColor
 from PySide6.QtCore import Qt, QTimer, QRectF
 
 from time_announcer.speaker import Speaker
-
+from time_announcer.settings import Settings
 
 STYLESHEET = """
 QWidget {
@@ -159,6 +159,7 @@ class MainWindow(QWidget):
         self.setStyleSheet(STYLESHEET)
 
         self.speaker = Speaker()
+        self.settings = Settings()
         self.running = False
         self.interval_seconds = 30 * 60
         self.elapsed_seconds = 0
@@ -180,7 +181,7 @@ class MainWindow(QWidget):
 
         self.interval_spinbox = QSpinBox()
         self.interval_spinbox.setRange(1, 120)
-        self.interval_spinbox.setValue(30)
+        self.interval_spinbox.setValue(self.settings.get("interval_minutes"))
         self.interval_spinbox.setSuffix(" min")
 
         self.start_button = QPushButton("Start")
@@ -232,6 +233,7 @@ class MainWindow(QWidget):
 
     def _start(self) -> None:
         self.interval_seconds = self.interval_spinbox.value() * 60
+        self.settings.set("interval_minutes", self.interval_spinbox.value())
         self.elapsed_seconds = 0
         self.running = True
         self.ring.set_progress(0)
