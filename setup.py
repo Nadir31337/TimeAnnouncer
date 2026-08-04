@@ -7,6 +7,7 @@ OPTIONS = {
     "argv_emulation": False,
     "packages": ["time_announcer"],
     "includes": ["PySide6", "pyttsx3.drivers", "pyttsx3.drivers.nsss"],
+    "iconfile": "icons/app_icon.icns",
     "plist": {
         "CFBundleName": "Time Announcer",
         "CFBundleDisplayName": "Time Announcer",
