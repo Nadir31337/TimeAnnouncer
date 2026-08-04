@@ -218,6 +218,12 @@ class MainWindow(QWidget):
         self.start_button.clicked.connect(self._start)
         self.stop_button.clicked.connect(self._stop)
 
+        def closeEvent(self, event) -> None:
+         """Instead of quitting the app, just hide the window — the app
+         keeps running in the menu bar."""
+         event.ignore()
+         self.hide()
+
     def _current_time_str(self) -> str:
         return datetime.now().strftime("%I:%M %p")
 
